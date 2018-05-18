@@ -1,0 +1,270 @@
+<?xml version="1.0" ?>
+
+<robot name="CompassGait">
+  <link name="world">
+  </link>
+
+  <link name="ground">
+    <inertial>
+      <mass value="0"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -5"/>
+      <geometry>
+        <box size="100.0 100.0 5.0"/>
+      </geometry>
+      <material name="ground">
+        <color rgba="0.93 0.79 0.68 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -5"/>
+      <geometry>
+        <box size="100.0 100.0 5.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <link name="pre_hip_x">
+  </link>
+
+  <!-- <link name="pre_hip_z">
+  </link> -->
+
+  <link name="hip">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_upper_leg">
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value=".05"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+      
+    <visual>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.0075"/>
+      </geometry>
+      <material name="left">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.5"/>
+      <geometry>
+        <sphere radius="0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_lower_leg">
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value=".05"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+      
+    <visual>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.0075"/>
+      </geometry>
+      <material name="left">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.5"/>
+      <geometry>
+        <sphere radius="0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="right_upper_leg">
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value=".05"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+      
+    <visual>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.0075"/>
+      </geometry>
+      <material name="right">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.5"/>
+      <geometry>
+        <sphere radius="0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="right_lower_leg">
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value=".05"/>
+      <inertia ixx="0"  ixy="0"  ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+      
+    <visual>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.0075"/>
+      </geometry>
+      <material name="right">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.5"/>
+      <geometry>
+        <sphere radius="0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_foot">
+  </link>
+
+  <link name="right_foot">
+  </link>
+
+  <joint name="ground_base" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="world"/>
+    <child link="ground"/>
+  </joint>
+
+  <joint name="body_x" type="prismatic">
+    <origin xyz="0 0 0"/>
+    <parent link="ground"/>
+    <child link="pre_hip_x"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-100" upper="100" effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="body_z" type="prismatic">
+    <origin xyz="0 0 0"/>
+    <parent link="pre_hip_x"/>
+    <child link="hip"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-100" upper="100" effort="100" velocity="100"/>
+  </joint>
+
+  <!-- <joint name="body_z" type="prismatic">
+    <origin xyz="0 0 0"/>
+    <parent link="pre_hip_x"/>
+    <child link="pre_hip_z"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-100" upper="100" effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="body" type="continuous">
+    <origin xyz="0 0 0"/>
+    <parent link="pre_hip_z"/>
+    <child link="hip"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+  </joint> -->
+
+  <joint name="hip_pin_left" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="hip"/>
+    <child link="left_upper_leg"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="hip_pin_right" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="hip"/>
+    <child link="right_upper_leg"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="left_leg_pin" type="revolute">
+    <origin xyz="0 0 -0.5" rpy="0 0 0"/>
+    <parent link="left_upper_leg"/>
+    <child link="left_lower_leg"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0" upper="3.141" effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="right_leg_pin" type="revolute">
+    <origin xyz="0 0 -0.5" rpy="0 0 0"/>
+    <parent link="right_upper_leg"/>
+    <child link="right_lower_leg"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0" upper="3.141" effort="100" velocity="100"/>
+  </joint>
+
+  <joint name="left_foot_pin" type="fixed">
+    <origin xyz="0 0 -0.5"/>
+    <parent link="left_lower_leg"/>
+    <child link="left_foot"/>
+  </joint>
+
+  <joint name="right_foot_pin" type="fixed">
+    <origin xyz="0 0 -0.5"/>
+    <parent link="right_lower_leg"/>
+    <child link="right_foot"/>
+  </joint>
+
+  <transmission name="hip_left" type="SimpleTransmission">
+    <actuator name="hip_left_motor"/>
+    <joint name="hip_pin_left"/>
+    <mechanicalReduction>1.0</mechanicalReduction>
+  </transmission>
+
+  <transmission name="hip_right" type="SimpleTransmission">
+    <actuator name="hip_right_motor"/>
+    <joint name="hip_pin_right"/>
+    <mechanicalReduction>1.0</mechanicalReduction>
+  </transmission>
+
+  <transmission name="left_leg" type="SimpleTransmission">
+    <actuator name="left_leg_motor"/>
+    <joint name="left_leg_pin"/>
+    <mechanicalReduction>1.0</mechanicalReduction>
+  </transmission>
+
+  <transmission name="right_leg" type="SimpleTransmission">
+    <actuator name="right_leg_motor"/>
+    <joint name="right_leg_pin"/>
+    <mechanicalReduction>1.0</mechanicalReduction>
+  </transmission>
+  
+</robot>
